@@ -18,27 +18,42 @@ spec:
       port: 80
       targetPort: http
 ---
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: ConfigMap
 metadata:
   name: httpbin
-  labels:
-    app: httpbin
-spec:
-  replicas: 2
-  selector:
-    matchLabels:
-      app: httpbin
-  template:
-    metadata:
-      labels:
-        app: httpbin
-    spec:
-      serviceAccountName: httpbin
-      containers:
-        - name: httpbin
-          image: kennethreitz/httpbin:latest
-          ports:
-            - name: http
-              containerPort: 80
+data:
+  player_initial_lives: "3"
+  ui_properties_file_name: "user-interface.properties"
+  game.properties: |
+    enemy.types=aliens,monsters
+    player.maximum-lives=5
+  user-interface.properties: |
+    color.good=purple
+    color.bad=yellow
+    allow.textmode=true
+---
+#apiVersion: apps/v1
+#kind: Deployment
+#metadata:
+#  name: httpbin
+#  labels:
+#    app: httpbin
+#spec:
+#  replicas: 2
+#  selector:
+#    matchLabels:
+#      app: httpbin
+#  template:
+#    metadata:
+#      labels:
+#        app: httpbin
+#    spec:
+#      serviceAccountName: httpbin
+#      containers:
+#        - name: httpbin
+#          image: kennethreitz/httpbin:latest
+#          ports:
+#            - name: http
+#              containerPort: 80
 ---
